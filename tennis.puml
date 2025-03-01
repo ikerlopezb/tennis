@@ -1,0 +1,65 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+class Referee {
+- String forename
+- String surname
+- String email
+- String password
+}
+
+class Player {
+- String forename
+- int age
+}
+
+class Match {
+- ArrayList<Set> sets
+- Date date
+- ArrayList<Player> players
+}
+
+class Game {
+- ArrayList<Point> points
++ addPoint(Point point)
+- hasAchievedFourPoints() //Comprueba si en este juego se han alcanzado al menos 4 puntos
+- differenceOfTwo() //Comprueba que la diferencia sea de 2 puntos
++ gameWinner() // Devuelve la posición del array [0, 1] en la que se encuentra el jugador que ha ganado el juego
+}
+
+class Point {
+- int point
++ getPoint()
++ setPoint(int point)
+}
+
+class Set {
+- ArrayList<Game> games
+- ArrayList<Point> tieBreakPoints
++ addGame(Game game)
+- hasAchievedSixGames()
+- hasAchievedSevenTieBreakPoints()
+- addTieBreakPoint(Point tieBreakPoint)
+- tieBreakPointWinner()
+- differenceOfTwo()
+- drewAtSixGames()
+}
+
+class Scoreboard {
++ ArrayList<Set> sets
+}
+
+interface PointsDynamic {
++ hasAchieved(int value)
++ differenceOfTwo()
++ isWinner()
++ add()
+}
+
+Match *-down-> Set
+Match o-left-> Player
+Set *-down-> Game
+Game *-down-> Point
+PointsDynamic <|-right- Game
+PointsDynamic <|-right- Set
+@enduml
