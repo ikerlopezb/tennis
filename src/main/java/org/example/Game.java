@@ -7,7 +7,7 @@ import java.util.stream.*;
 
 public class Game {
 
-    List<Point> points;
+    private final List<Point> points;
 
     public Game() {
         this.points = new ArrayList<>(2);
