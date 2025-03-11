@@ -2,18 +2,17 @@ package org.example;
 
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.*;
 
-public class Game {
+public class Game implements ScoreTracker{
 
-    private final List<Point> points;
-
+    private ArrayList<Integer> points;
     public Game() {
         this.points = new ArrayList<>(2);
     }
 
-    public void addPoint(int number){
-        points.get(number);
+    @Override
+    public boolean isWinner() {
+        return (this.points.get(0) >= 4 || this.points.get(1) >=4) &&
+            Math.abs(this.points.get(0) - this.points.get(1)) >=2;
     }
 }
