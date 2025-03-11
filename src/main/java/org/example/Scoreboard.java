@@ -1,8 +1,11 @@
 package org.example;
 
+import java.util.ArrayList;
 import java.util.stream.Stream;
 
 public class Scoreboard {
-    Stream<Set> sets;
+    ArrayList<Set> sets;
+    Game lastGame;
+    ArrayList<String> playerNames;
 
 }

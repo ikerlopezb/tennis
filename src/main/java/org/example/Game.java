@@ -7,6 +7,7 @@ public class Game implements ScoreTracker{
 
     private ArrayList<Integer> points;
     public Game() {
+        assert isWinner(); //Y el primer juego cómo se crea?
         this.points = new ArrayList<>(2);
     }
 
@@ -15,4 +16,5 @@ public class Game implements ScoreTracker{
         return (this.points.get(0) >= 4 || this.points.get(1) >=4) &&
             Math.abs(this.points.get(0) - this.points.get(1)) >=2;
     }
+
 }
