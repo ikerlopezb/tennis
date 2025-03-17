@@ -1,8 +1,9 @@
 package org.example;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public interface ScoreTracker {
-
-
     boolean isWinner();  /*¿al haber cambiado este método de gamePoint a isWinner
     tiene sentido tener esta interfaz?
     */
