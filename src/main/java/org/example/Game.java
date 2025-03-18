@@ -50,4 +50,7 @@ public class Game implements ScoreTracker{
         }
     }
 
+    public Map<Player, PlayerRole> getRoles() {
+        return this.roles;
+    }
 }
