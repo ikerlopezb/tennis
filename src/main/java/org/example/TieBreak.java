@@ -14,6 +14,7 @@ public class TieBreak extends Game{
     public TieBreak(List<Player> players) {
         super(players); //este super qué hereda exactamente
         super.swapService();
+        super.swapService();
         //si hago aquí comprobación de qué rol es, no estoy pecando de un instanceOf?
         this.roles = super.getRoles(); //tiene sentido hacer esto o es mejor trabajar con el atributo de arriba directamente
     }
