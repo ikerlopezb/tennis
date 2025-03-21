@@ -2,7 +2,7 @@ package org.example;
 
 import java.util.*;
 
-public class Set implements ScoreTracker {
+public class Set implements ScoreTracker{
     private List<Game> games;
     private List<Player> players;
 
@@ -27,6 +27,7 @@ public class Set implements ScoreTracker {
         }
     }
 
+    /*
     @Override
     public boolean isWinner () {
         List<Integer> games = this.wonGames.values().stream()
@@ -36,23 +37,25 @@ public class Set implements ScoreTracker {
         return games.get(1) >= 6 && (games.get(1) - games.get(0)) >= 2;
     }
 
-    public int countWinners(Player player){
-        return this.games.stream().filter(game -> game.isWinner(player)).count();
-    }
+     */
 
     public boolean isWinner(Player player){
-        int x = this.countWinners(this.other(player));
-        return this.countWinners(player) == 6 && this.other(player);
+        return this.countWinners(player) == 6 &&
+                (this.countWinners(player) - this.countWinners(this.other(player))) >= 2;
     }
+
+    public int countWinners(Player player){
+        return (int)this.games.stream().filter(game -> game.isWinner(player)).count();
+    }
+
+
 
     public boolean isWon(){
 
     }
 
-    public Player other(Player player){
-        for () {
-
-        }
+    public Player other(Player player) {
+        return players.stream().filter(p -> !p.equals(player)).findFirst().orElse(null);
     }
 
 

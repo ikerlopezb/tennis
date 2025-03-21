@@ -18,14 +18,14 @@ public class Game implements ScoreTracker{
     }
 
     @Override
-    public boolean isWinner() {
+    public boolean isWinner(Player player) {
         List<Integer> scores = new ArrayList<>(points.values());
         Collections.sort(scores);
         return scores.get(1) >= 4 && (scores.get(1) - scores.get(0)) >= 2;
     }
 
     public Player gameWinner(){
-        assert isWinner();
+        assert isWinner(Player player);
         return this.points.entrySet()
                 .stream()
                 .max(Map.Entry.comparingByValue())

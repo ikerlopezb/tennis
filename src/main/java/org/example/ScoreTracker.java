@@ -3,11 +3,9 @@ package org.example;
 import java.util.ArrayList;
 import java.util.List;
 
-public interface ScoreTracker {
-    boolean isWinner();  /*¿al haber cambiado este método de gamePoint a isWinner
-    tiene sentido tener esta interfaz?
-    */
-
+public interface ScoreTracker{
+    boolean isWinner(Player player);
+    int countWinners(Player player);
 
     /* todo este código irá a un controller
     private final List<Integer> scores;
