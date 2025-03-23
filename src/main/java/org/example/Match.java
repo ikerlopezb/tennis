@@ -2,9 +2,10 @@ package org.example;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.stream.Stream;
 
-public class Match implements ScoreTracker{
+public class Match extends ScoreTracker{
     private ArrayList<Player> players;
     private ArrayList<Set> sets;
     private Date date;
@@ -26,6 +27,10 @@ public class Match implements ScoreTracker{
 
     public int countWinners(Player player){
         return (int)this.sets.stream().filter(set -> set.isWinner(player)).count();
+    }
+
+    public void showScoreboard() {
+        scoreboard.showScoreboard(players, sets);//Creo que habría que hacer el método currentGame público
     }
 
 
