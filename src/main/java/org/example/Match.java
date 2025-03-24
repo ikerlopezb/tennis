@@ -2,10 +2,8 @@ package org.example;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
-import java.util.stream.Stream;
 
-public class Match extends ScoreTracker{
+public class Match implements ScoreTracker {
     private ArrayList<Player> players;
     private ArrayList<Set> sets;
     private Date date;
@@ -20,19 +18,28 @@ public class Match extends ScoreTracker{
         this.sets.add(new Set(players));
     }
 
-    @Override
-    public boolean isWinner(Player player) {
-        return countWinners(player) >= Math.ceil(this.setNumber/2.0);
+    public Set lastSet() {
+        return this.sets.getLast();
     }
 
-    public int countWinners(Player player){
-        return (int)this.sets.stream().filter(set -> set.isWinner(player)).count();
+    @Override
+    public boolean isWinner(Player player) {
+        return countWinners(player) >= Math.ceil(this.setNumber / 2.0);
+    }
+
+    public int countWinners(Player player) {
+        return (int) this.sets.stream().filter(set -> set.isWinner(player)).count();
     }
 
     public void showScoreboard() {
-        scoreboard.showScoreboard(players, sets);//Creo que habría que hacer el método currentGame público
+        this.scoreboard.showScoreboard(players, sets);//Creo que habría que hacer el método currentGame públic
     }
 
-
+    public void addPoint(PlayerRole playerRole){
+        this.lastSet().addPoint(playerRole);
+        if (this.lastSet().lastGame().isWinner(this.lastSet().lastGame().playerWithRole(playerRole))){
+            this.sets.add(new Set(this.lastSet()));
+        }
+    }
 }
 

@@ -26,19 +26,24 @@ public class Game implements ScoreTracker{
                                 //juego que creamos, porque no se va a hacer bien el swap.
         this.points = new HashMap<>();
         lastGame.swapService();
-        for(Player player : points) {
+        for(Player player : this.points.keySet()) {
             this.points.put(player, 0);
         }
     }
     @Override
     public boolean isWinner(Player player) {
-        List<Integer> scores = new ArrayList<>(points.values());
-        Collections.sort(scores);
-        return scores.get(1) >= 4 && (scores.get(1) - scores.get(0)) >= 2;
+        return this.points.get(player) >= 4 &&
+                (this.points.get(player) - this.points.get(this.other(player)) == 2);
+    }
+
+    public Player other(Player player) {
+                return this.roles.keySet().stream()
+                .filter(p -> !p.equals(player))
+                .findFirst()
+                .orElse(null);
     }
 
     public Player gameWinner(){
-        assert isWinner(Player player);
         return this.points.entrySet()
                 .stream()
                 .max(Map.Entry.comparingByValue())
@@ -52,7 +57,6 @@ public class Game implements ScoreTracker{
     }
 
     public void swapService() {
-
         for(Player player : this.roles.keySet()) {
             this.roles.get(player).swapService();
         }

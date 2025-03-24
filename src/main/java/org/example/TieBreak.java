@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-public class TieBreak extends Game{
+public class TieBreak extends Game {
 
     private Map<Player, Integer> points;
     private Map<Player, PlayerRole> roles;
@@ -20,9 +20,8 @@ public class TieBreak extends Game{
     }
 
     @Override
-    public boolean isWinner(){
-        List<Integer> scores = new ArrayList<>(this.points.values());
-        Collections.sort(scores);
-        return scores.get(1) >= 7;
+    public boolean isWinner(Player player){
+        return this.points.get(player) >= 7 &&
+                (this.points.get(player) - this.points.get(this.other(player)) == 2);
     }
 }

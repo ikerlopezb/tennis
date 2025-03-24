@@ -7,7 +7,7 @@ import java.util.Map;
 public interface ScoreTracker{
 
     boolean isWinner(Player player);
-    //int countWinners(Player player);
+    //int countWinners(Player player)
 
     /* todo este código irá a un controller
     private final List<Integer> scores;

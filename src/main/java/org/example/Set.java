@@ -10,40 +10,48 @@ public class Set implements ScoreTracker{
         this.games = new ArrayList<>();
         this.games.add(new Game(players));
     }
-    public Set(Set set){
+    public Set(Set lastSet){
         this.games = new ArrayList<>();
-        this.games.add(set.lastGame());
+        this.games.add(lastSet.lastGame());
+        this.lastGame().swapService();
     }
-
-    public void point(PlayerRole playerRole) { //revisar nombre
+    public Game lastGame() {
+        return this.games.getLast();
+    }
+    public void addPoint(PlayerRole playerRole) { //revisar nombre
         this.lastGame().addPoint(playerRole);
         if (this.lastGame().isWinner(this.lastGame().playerWithRole(playerRole))) {
-            this.games.add(new Game(this.players, this.lastGame().swapService()));
+            this.games.add(new Game(this.lastGame()));
+        }
+        else{
+            if(this.isTieBreak(this.lastGame().playerWithRole(playerRole))){
+                this.games.add(new TieBreak(players));
+            }
         }
     }
 
-    public boolean isWinner(Player player){
+    private boolean isTieBreak(Player player){
         return this.countWinners(player) == 6 &&
-                (this.countWinners(player) - this.countWinners(this.other(player))) >= 2;
+                this.countWinners(this.other(player)) == 6;
+    }
+
+    @Override
+    public boolean isWinner(Player player){
+        if(isTieBreak(player)) {
+            return this.lastGame().isWinner(player);
+        }
+        else {
+           return this.countWinners(player) == 6 &&
+                    (this.countWinners(player) - this.countWinners(this.other(player))) >= 2;
+        }
     }
 
     public int countWinners(Player player){
         return (int)this.games.stream().filter(game -> game.isWinner(player)).count();
     }
-
-    public Game lastGame() {
-        return this.games.getLast();
-    }
-
-    public boolean isWon(){
-
-    }
-
     public Player other(Player player) {
         return players.stream().filter(p -> !p.equals(player)).findFirst().orElse(null);
     }
-
-
 }
 
 
