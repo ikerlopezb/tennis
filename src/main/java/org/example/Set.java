@@ -18,7 +18,7 @@ public class Set implements ScoreTracker{
     public Game lastGame() {
         return this.games.getLast();
     }
-    public void addPoint(PlayerRole playerRole) { //revisar nombre
+    public void addPoint(PlayerRole playerRole) {
         this.lastGame().addPoint(playerRole);
         if (this.lastGame().isWinner(this.lastGame().playerWithRole(playerRole))) {
             this.games.add(new Game(this.lastGame()));
@@ -30,22 +30,21 @@ public class Set implements ScoreTracker{
         }
     }
 
-    private boolean isTieBreak(Player player){
-        return this.countWinners(player) == 6 &&
-                this.countWinners(this.other(player)) == 6;
-    }
-
     @Override
     public boolean isWinner(Player player){
         if(isTieBreak(player)) {
             return this.lastGame().isWinner(player);
         }
         else {
-           return this.countWinners(player) == 6 &&
+            return this.countWinners(player) == 6 &&
                     (this.countWinners(player) - this.countWinners(this.other(player))) >= 2;
         }
     }
 
+    private boolean isTieBreak(Player player){
+        return this.countWinners(player) == 6 &&
+                this.countWinners(this.other(player)) == 6;
+    }
     public int countWinners(Player player){
         return (int)this.games.stream().filter(game -> game.isWinner(player)).count();
     }

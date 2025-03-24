@@ -8,12 +8,12 @@ public class Match implements ScoreTracker {
     private ArrayList<Set> sets;
     private Date date;
     private Scoreboard scoreboard;
-    private final int setNumber;
+    private final int maxSets;
 
-    public Match(ArrayList<Player> players, Date date, int setNumber) {
+    public Match(ArrayList<Player> players, Date date, int maxSets) {
         this.players = players;
         this.date = date;
-        this.setNumber = setNumber;
+        this.maxSets = maxSets;
         this.sets = new ArrayList<>();
         this.sets.add(new Set(players));
     }
@@ -24,7 +24,7 @@ public class Match implements ScoreTracker {
 
     @Override
     public boolean isWinner(Player player) {
-        return countWinners(player) >= Math.ceil(this.setNumber / 2.0);
+        return this.countWinners(player) >= Math.ceil(this.maxSets / 2.0);
     }
 
     public int countWinners(Player player) {
@@ -32,12 +32,12 @@ public class Match implements ScoreTracker {
     }
 
     public void showScoreboard() {
-        this.scoreboard.showScoreboard(players, sets);//Creo que habría que hacer el método currentGame públic
+        this.scoreboard.showScoreboard(players, sets);
     }
 
     public void addPoint(PlayerRole playerRole){
         this.lastSet().addPoint(playerRole);
-        if (this.lastSet().lastGame().isWinner(this.lastSet().lastGame().playerWithRole(playerRole))){
+        if (this.lastSet().isWinner(playerRole){
             this.sets.add(new Set(this.lastSet()));
         }
     }

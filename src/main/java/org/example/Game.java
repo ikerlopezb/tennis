@@ -7,10 +7,6 @@ public class Game implements ScoreTracker{
 
     private Map<Player, Integer> points;
     private Map<Player, PlayerRole> roles;
-    public Map<Player, PlayerRole> getRoles() {
-        return this.roles;
-    }
-
     public Game(List<Player> players) {
         this.points = new HashMap<>();
         this.roles = new HashMap<>();
@@ -20,12 +16,9 @@ public class Game implements ScoreTracker{
         this.roles.put(players.get(0), PlayerRole.SERVER);
         this.roles.put(players.get(1), PlayerRole.RECEIVER);
     }
-    public Game(Game lastGame) {//No sé como hacerlo. La idea es tener este constructor ya que en el primero se van a
-                                //inicializar los roles para el primer juego, pero en los siguientes hay que ir cambiándolos
-                                //a partir de ese primer juego. De manera que no podemos inicializarlos a SERVER y RECIEVER en cada
-                                //juego que creamos, porque no se va a hacer bien el swap.
+    public Game(Game game) {
         this.points = new HashMap<>();
-        lastGame.swapService();
+        game.swapService();
         for(Player player : this.points.keySet()) {
             this.points.put(player, 0);
         }
@@ -37,10 +30,9 @@ public class Game implements ScoreTracker{
     }
 
     public Player other(Player player) {
-                return this.roles.keySet().stream()
-                .filter(p -> !p.equals(player))
-                .findFirst()
-                .orElse(null);
+        return this.roles.keySet().stream()
+        .filter(p -> !p.equals(player))
+        .findFirst().get();
     }
 
     public Player gameWinner(){
@@ -70,5 +62,8 @@ public class Game implements ScoreTracker{
                 .map(Map.Entry::getKey)
                 .findFirst()
                 .get();
+    }
+    public Map<Player, PlayerRole> getRoles() {
+        return this.roles;
     }
 }
