@@ -7,7 +7,6 @@ public class Match implements ScoreTracker {
     private ArrayList<Player> players;
     private ArrayList<Set> sets;
     private Date date;
-    private Scoreboard scoreboard;
     private final int maxSets;
 
     public Match(ArrayList<Player> players, Date date, int maxSets) {
@@ -18,7 +17,7 @@ public class Match implements ScoreTracker {
         this.sets.add(new Set(players));
     }
 
-    public Set lastSet() {
+    private Set lastSet() {
         return this.sets.getLast();
     }
 
@@ -31,15 +30,18 @@ public class Match implements ScoreTracker {
         return (int) this.sets.stream().filter(set -> set.isWinner(player)).count();
     }
 
-    public void showScoreboard() {
-        this.scoreboard.showScoreboard(players, sets);
-    }
-
     public void addPoint(PlayerRole playerRole){
         this.lastSet().addPoint(playerRole);
         if (this.lastSet().isWinner(playerRole){
             this.sets.add(new Set(this.lastSet()));
         }
+    }
+
+    public ArrayList<Player> getPlayers(){
+        return this.players;
+    }
+    public ArrayList<Set> getSets() {
+        return this.sets;
     }
 }
 
