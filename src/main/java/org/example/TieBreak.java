@@ -6,17 +6,19 @@ import java.util.List;
 import java.util.Map;
 
 public class TieBreak extends Game {
+    private final int maxPointTieBreak = 7;
+    private final int difference = 2;
     public TieBreak(List<Player> players) {
-        super(players); //este super qué hereda exactamente
+        super(players);
         super.swapService();
-        //si hago aquí comprobación de qué rol es, no estoy pecando de un instanceOf?
-        this.roles = super.getRoles(); //tiene sentido hacer esto o es mejor trabajar con el atributo de arriba directamente
     }
 
     @Override
-    public boolean isWinner(Player player){
-        return this.points.get(player) >= 7 &&
-                (this.points.get(player) - this.points.get(this.other(player)) == 2);
+    public boolean isWinner(Player player) {
+        int playerPoints = super.getPoints().get(player);
+        int opponentPoints = super.getPoints().get(this.other(player));
+
+        return playerPoints >= this.maxPointTieBreak && (playerPoints - opponentPoints) >= this.difference;
     }
     //el servicio cambia
 }

@@ -15,7 +15,7 @@ public class Scoreboard {
        ArrayList<Player> players = this.match.getPlayers();
     }
     public String toString(){
-        return this.names() + ":" + gamePoints() + setPoints();
+        return this.names() + ":" + currentGamePoints() + setPoints();
 
     }
 
@@ -33,7 +33,7 @@ public class Scoreboard {
         return String.valueOf(pointsPlayer1) + "\n" + String.valueOf(pointsPlayer2);
     }
 
-    private String gamePoints() {
+    private String currentGamePoints() { //revisar llamadas de métodos
         this.match.getSets().getLast().lastGame().getPoints();
     }
 

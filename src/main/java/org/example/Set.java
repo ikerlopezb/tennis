@@ -5,6 +5,11 @@ import java.util.*;
 public class Set implements ScoreTracker{
     private List<Game> games;
     private List<Player> players;
+
+    private final int maxGames = 12;
+    private final int oneSet = 6;
+    private final int difference = 2;
+
     public Set(List<Player> players) {
         this.players = players;
         this.games = new ArrayList<>();
@@ -21,12 +26,13 @@ public class Set implements ScoreTracker{
     public void addPoint(PlayerRole playerRole) {
         this.lastGame().addPoint(playerRole);
         if (this.lastGame().isWinner(this.lastGame().playerWithRole(playerRole))) {
-            this.games.add(new Game(this.lastGame()));
-        }
-        else{
-            if(this.isTieBreak(this.lastGame().playerWithRole(playerRole))){
-                this.games.add(new TieBreak(players));
+            Game nextGame;
+            if (this.isTieBreak(this.lastGame().playerWithRole(playerRole))) {
+                nextGame = new TieBreak(players);
+            } else {
+                nextGame = new Game(this.lastGame());
             }
+            this.games.add(nextGame);
         }
     }
 
@@ -36,14 +42,13 @@ public class Set implements ScoreTracker{
             return this.lastGame().isWinner(player);
         }
         else {
-            return this.countWinners(player) == 6 &&
-                    (this.countWinners(player) - this.countWinners(this.other(player))) >= 2;
+            return this.countWinners(player) == this.oneSet &&
+                    (this.countWinners(player) - this.countWinners(this.other(player))) >= this.difference;
         }
     }
 
     private boolean isTieBreak(Player player){
-        return this.countWinners(player) == 6 &&
-                this.countWinners(this.other(player)) == 6;
+        return this.countWinners(player) + this.countWinners(this.other(player)) == this.maxGames;
     }
     public int countWinners(Player player){
         return (int)this.games.stream().filter(game -> game.isWinner(player)).count();
