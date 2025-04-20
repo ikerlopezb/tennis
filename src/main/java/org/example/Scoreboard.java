@@ -3,9 +3,10 @@ package org.example;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.StringJoiner;
 
 public class Scoreboard {
-    Match match;
+    private Match match;
 
     public Scoreboard(Match match) {
         this.match = match;
@@ -20,21 +21,24 @@ public class Scoreboard {
     }
 
     private String setPoints() {
-        int pointsPlayer1 = 0;
-        int pointsPlayer2 = 0;
+        StringJoiner
+        return this.match.getSets()
+                .stream()
+                .filter(set -> set.isWinner(this.match.getPlayer(0))).count()
+                + "\n" +
+                this.match.getSets()
+                        .stream()
+                        .filter(set -> set.isWinner(this.match.getPlayer(1))).count();
 
-        for(Set set : this.match.getSets()) {
-            if (set.isWinner(this.match.getPlayers().get(0))){
-                pointsPlayer1++;
-            }
-            else
-                pointsPlayer2++;
-        }
-        return String.valueOf(pointsPlayer1) + "\n" + String.valueOf(pointsPlayer2);
     }
 
-    private String currentGamePoints() { //revisar llamadas de métodos
-        this.match.getSets().getLast().lastGame().getPoints();
+    private String currentGamePoints() {//revisar llamadas de métodos
+        StringJoiner joiner = new StringJoiner("\n");
+        for(Player player: this.match.getPlayers()) {
+            int points = this.match.pointsLatestGame(player);
+            joiner.add(String.valueOf(points));
+        }
+        return joiner.toString();
     }
 
 }

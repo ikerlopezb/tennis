@@ -37,11 +37,18 @@ public class Match implements ScoreTracker {
         }
     }
 
+    public int pointsLatestGame(Player player) {
+        return this.lastSet().lastGame().getPoints(player);
+    }
     public ArrayList<Player> getPlayers(){
         return this.players;
     }
     public ArrayList<Set> getSets() {
         return this.sets;
+    }
+    public Player getPlayer(int i){
+        assert i>=0 && i<=1;
+        return getPlayers().get(i);
     }
 }
 

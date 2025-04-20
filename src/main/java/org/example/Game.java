@@ -28,10 +28,6 @@ public class Game implements ScoreTracker{
         }
     }
 
-    public Map<Player, Integer> getPoints() {
-        return points;
-    }
-
     @Override
     public boolean isWinner(Player player) {
         return this.points.get(player) >= this.maxPoints &&
@@ -77,7 +73,14 @@ public class Game implements ScoreTracker{
                 .findFirst()
                 .get();
     }
+
+    public int getPoints(Player player) {
+        return this.points.get(player);
+    }
     public Map<Player, PlayerRole> getRoles() {
         return this.roles;
+    }
+    public Map<Player, Integer> getPoints() {
+        return points;
     }
 }
