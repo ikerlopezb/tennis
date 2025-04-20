@@ -21,15 +21,15 @@ public class Scoreboard {
     }
 
     private String setPoints() {
-        StringJoiner
-        return this.match.getSets()
-                .stream()
-                .filter(set -> set.isWinner(this.match.getPlayer(0))).count()
-                + "\n" +
-                this.match.getSets()
-                        .stream()
-                        .filter(set -> set.isWinner(this.match.getPlayer(1))).count();
-
+        StringJoiner joiner = new StringJoiner("\t");
+        for(Set set: this.match.getSets()){
+            for(Player player : this.match.getPlayers()) {
+                int gamesWon = set.countWinners(player);
+                joiner.add(String.valueOf(gamesWon));
+                joiner.add("\n");
+            }
+        }
+        return joiner.toString();
     }
 
     private String currentGamePoints() {//revisar llamadas de métodos
