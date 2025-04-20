@@ -5,7 +5,6 @@ import java.util.*;
 public class Set implements ScoreTracker{
     private List<Game> games;
     private List<Player> players;
-
     private final int maxGames = 12;
     private final int oneSet = 6;
     private final int difference = 2;
@@ -17,15 +16,14 @@ public class Set implements ScoreTracker{
     }
     public Set(Set lastSet){
         this.games = new ArrayList<>();
-        this.games.add(lastSet.lastGame());
-        this.lastGame().swapService();
+        this.games.add(new Game(this.lastGame()));
     }
     public Game lastGame() {
         return this.games.getLast();
     }
     public void addPoint(PlayerRole playerRole) {
         this.lastGame().addPoint(playerRole);
-        if (this.lastGame().isWinner(this.lastGame().playerWithRole(playerRole))) {
+        if (this.lastGame().isWinner(this.lastGame().playerWithRole(playerRole))) { //está bien pasarle a isWinner de esa manera el Player??
             Game nextGame;
             if (this.isTieBreak(this.lastGame().playerWithRole(playerRole))) {
                 nextGame = new TieBreak(players);
@@ -54,7 +52,7 @@ public class Set implements ScoreTracker{
         return (int)this.games.stream().filter(game -> game.isWinner(player)).count();
     }
     public Player other(Player player) {
-        return players.stream().filter(p -> !p.equals(player)).findFirst().orElse(null);
+        return this.players.stream().filter(p -> !p.equals(player)).findFirst().orElse(null);
     }
 }
 

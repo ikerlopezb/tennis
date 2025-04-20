@@ -32,12 +32,12 @@ public class Match implements ScoreTracker {
 
     public void addPoint(PlayerRole playerRole){
         this.lastSet().addPoint(playerRole);
-        if (this.lastSet().isWinner(playerRole){
+        if (this.lastSet().isWinner(playerRole){ //this.lastGame().playerWithRole(playerRole)
             this.sets.add(new Set(this.lastSet()));
         }
     }
 
-    public int pointsLatestGame(Player player) {
+    public int pointsLatestGame(Player player) { //revisar las tres llamadas seguidas
         return this.lastSet().lastGame().getPoints(player);
     }
     public ArrayList<Player> getPlayers(){
@@ -45,10 +45,6 @@ public class Match implements ScoreTracker {
     }
     public ArrayList<Set> getSets() {
         return this.sets;
-    }
-    public Player getPlayer(int i){
-        assert i>=0 && i<=1;
-        return getPlayers().get(i);
     }
 }
 

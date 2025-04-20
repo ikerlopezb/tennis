@@ -48,13 +48,13 @@ public class Game implements ScoreTracker{
                 .getKey();
     }
 
-    public void addPoint(PlayerRole role) {
-        Player player = this.playerWithRole(role);
+    public void addPoint(PlayerRole playerRole) {
+        Player player = this.playerWithRole(playerRole);
         this.points.put(player, this.points.get(player) + 1);
     }
 
-    public void addPointTieBreak(PlayerRole role){ //aquí o en tieBreak
-        this.addPoint(role);
+    public void addPointTieBreak(PlayerRole playerRole){ //aquí o en tieBreak
+        this.addPoint(playerRole);
         swapService();
     }
 
@@ -64,6 +64,7 @@ public class Game implements ScoreTracker{
         }
     }
 
+    /*
     public Player playerWithRole(PlayerRole role) { //esto comentamos que sobraba?
         return this.roles
                 .entrySet()
@@ -73,6 +74,7 @@ public class Game implements ScoreTracker{
                 .findFirst()
                 .get();
     }
+     */
 
     public int getPoints(Player player) {
         return this.points.get(player);
