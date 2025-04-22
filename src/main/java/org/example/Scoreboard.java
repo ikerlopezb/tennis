@@ -14,6 +14,7 @@ public class Scoreboard {
 
     private String names() {
        ArrayList<Player> players = this.match.getPlayers();
+       return players.get(0).toString() + "\n" + players.get(1).toString();
     }
     public String toString(){
         return this.names() + ":" + currentGamePoints() + setPoints();
@@ -32,13 +33,12 @@ public class Scoreboard {
         return joiner.toString();
     }
 
-    private String currentGamePoints() {//revisar llamadas de métodos
+    private String currentGamePoints() {
         StringJoiner joiner = new StringJoiner("\n");
         for(Player player: this.match.getPlayers()) {
-            int points = this.match.pointsLatestGame(player);
+            int points = this.match.pointsLatestGame(player);//revisar llamadas de métodos
             joiner.add(String.valueOf(points));
         }
         return joiner.toString();
     }
-
 }

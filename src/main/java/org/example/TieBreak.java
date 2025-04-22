@@ -20,5 +20,4 @@ public class TieBreak extends Game {
 
         return playerPoints >= this.maxPointTieBreak && (playerPoints - opponentPoints) >= this.difference;
     }
-    //el servicio cambia
 }

@@ -20,9 +20,10 @@ public class Game implements ScoreTracker{
         this.roles.put(players.get(0), PlayerRole.SERVER);
         this.roles.put(players.get(1), PlayerRole.RECEIVER);
     }
-    public Game(Game game) { //no sabemos cómo modificarlo
+    public Game(Game lastGame) {
         this.points = new HashMap<>();
-        game.swapService();
+        this.roles = lastGame.getRoles();
+        this.swapService();
         for(Player player : this.points.keySet()) {
             this.points.put(player, 0);
         }
@@ -53,7 +54,7 @@ public class Game implements ScoreTracker{
         this.points.put(player, this.points.get(player) + 1);
     }
 
-    public void addPointTieBreak(PlayerRole playerRole){ //aquí o en tieBreak
+    public void addPointTieBreak(PlayerRole playerRole){ //este addPoint debe ir aquí o en TieBreak
         this.addPoint(playerRole);
         swapService();
     }
@@ -65,7 +66,7 @@ public class Game implements ScoreTracker{
     }
 
     /*
-    public Player playerWithRole(PlayerRole role) { //esto comentamos que sobraba?
+    public Player playerWithRole(PlayerRole role) { //esto comentamos que sobraba
         return this.roles
                 .entrySet()
                 .stream().
