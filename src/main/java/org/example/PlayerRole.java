@@ -1,14 +1,14 @@
 package org.example;
 
 public enum PlayerRole {
-    SERVER(0), RECEIVER(1);
+    SERVER, RECEIVER;
     private int index;
 
     PlayerRole(int index) {
         this.index = index;
     }
 
-    public void swapService() { //swap o swapService
+    public static void swapService() { //swap o swapService
         for(PlayerRole playerRole : PlayerRole.values()){
             playerRole.swap();
         }

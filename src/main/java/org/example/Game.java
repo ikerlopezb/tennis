@@ -6,37 +6,55 @@ import java.util.*;
 public class Game implements ScoreTracker{
 
     private Map<Player, Integer> points;
-    private Map<Player, PlayerRole> roles;
-    
-    private final int maxPoints = 4;
-    private final int difference = 2;
+    private Map<PlayerRole, Player> roles;
+    private final int MAXPOINTS = 4;
+    private final int DIFFERENCE = 2;
 
     public Game(List<Player> players) {
         this.points = new HashMap<>();
         this.roles = new HashMap<>();
+        this.rolesInitializer(players);
+        this.pointsInitializer(players);
+    }
+    public Game(Game previousGame) {
+        this.points = new HashMap<>();
+        this.roles.putAll(previousGame.getRoles());
+        this.swapService();
+        this.pointsInitializer(this.roles.values());
+    }
+
+    private void pointsInitializer(Collection <Player> players){
         for(Player player : players) {
             this.points.put(player, 0);
         }
-        this.roles.put(players.get(0), PlayerRole.SERVER);
-        this.roles.put(players.get(1), PlayerRole.RECEIVER);
     }
-    public Game(Game lastGame) {
-        this.points = new HashMap<>();
-        this.roles = lastGame.getRoles();
-        this.swapService();
-        for(Player player : this.points.keySet()) {
-            this.points.put(player, 0);
+
+    private void rolesInitializer(List<Player> players) {
+        Collections.shuffle(players);
+        int i = 0;
+        for (PlayerRole playerRole : PlayerRole.values()) {
+            this.roles.put(playerRole, players.get(i));
+            i++;
         }
     }
 
+    /*
+    private void rolesInitializer(List<Player> players) {
+        PlayerRole[] roleOrder = PlayerRole.values();
+        for (int i = 0; i < roleOrder.length; i++) {
+            this.roles.put(roleOrder[i], players.get(i));
+        }
+    }
+     */
+
     @Override
     public boolean isWinner(Player player) {
-        return this.points.get(player) >= this.maxPoints &&
-                (this.points.get(player) - this.points.get(this.other(player)) == this.difference);
+        return this.points.get(player) >= this.MAXPOINTS &&
+                (this.points.get(player) - this.points.get(this.other(player)) == this.DIFFERENCE);
     }
 
     public Player other(Player player) {
-        return this.roles.keySet().stream()
+        return this.points.keySet().stream()
         .filter(p -> !p.equals(player))
         .findFirst().get();
     }
@@ -80,10 +98,10 @@ public class Game implements ScoreTracker{
     public int getPoints(Player player) {
         return this.points.get(player);
     }
-    public Map<Player, PlayerRole> getRoles() {
+    public Map<PlayerRole, Player> getRoles() {
         return this.roles;
     }
     public Map<Player, Integer> getPoints() {
-        return points;
+        return this.points;
     }
 }
