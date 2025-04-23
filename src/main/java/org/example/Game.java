@@ -30,7 +30,6 @@ public class Game implements ScoreTracker{
     }
 
     private void rolesInitializer(List<Player> players) {
-        Collections.shuffle(players);
         int i = 0;
         for (PlayerRole playerRole : PlayerRole.values()) {
             this.roles.put(playerRole, players.get(i));
