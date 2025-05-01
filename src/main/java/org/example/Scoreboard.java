@@ -1,9 +1,7 @@
 package org.example;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.StringJoiner;
+import java.util.stream.Collectors;
 
 public class Scoreboard {
     private Match match;
@@ -22,23 +20,13 @@ public class Scoreboard {
     }
 
     private String setPoints() {
-        StringJoiner joiner = new StringJoiner("\t");
-        for(Set set: this.match.getSets()){
-            for(Player player : this.match.getPlayers()) {
-                int gamesWon = set.countWinners(player);
-                joiner.add(String.valueOf(gamesWon));
-                joiner.add("\n");
-            }
-        }
-        return joiner.toString();
+        return this.match.getPlayers().stream()
+                .map(player -> String.valueOf(this.match.countWinners(player)))
+                .collect(Collectors.joining("\n"));
     }
-
     private String currentGamePoints() {
-        StringJoiner joiner = new StringJoiner("\n");
-        for(Player player: this.match.getPlayers()) {
-            int points = this.match.pointsLatestGame(player);//revisar llamadas de métodos
-            joiner.add(String.valueOf(points));
-        }
-        return joiner.toString();
+        return this.match.getPlayers().stream()
+                .map(player -> String.valueOf(this.match.pointsLatestGame(player)))
+                .collect(Collectors.joining("\n"));
     }
 }

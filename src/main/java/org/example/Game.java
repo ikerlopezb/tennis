@@ -63,9 +63,13 @@ public class Game implements ScoreTracker{
     }
 
     public void swapService() {
-        for(PlayerRole playerRole : this.roles.keySet()) {
-            this.roles.get(playerRole).swapService();
+        for(PlayerRole playerRole : PlayerRole.values()) {
+            swap(playerRole);
         }
+    }
+    private void swap(PlayerRole playerRole) {
+        Player player = this.roles.get(playerRole);
+        this.roles.put(playerRole.swap(), player);
     }
 
     public Player playerWithRole(PlayerRole playerRole) {
