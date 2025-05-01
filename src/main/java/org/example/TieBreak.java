@@ -20,4 +20,10 @@ public class TieBreak extends Game {
 
         return playerPoints >= this.maxPointTieBreak && (playerPoints - opponentPoints) >= this.difference;
     }
+
+    @Override
+    public void addPoint(PlayerRole playerRole){ //este addPoint debe ir aquí o en TieBreak
+        this.addPoint(playerRole);
+        swapService();
+    }
 }

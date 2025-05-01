@@ -17,7 +17,7 @@ public class Match implements ScoreTracker {
         this.sets.add(new Set(players));
     }
 
-    private Set lastSet() {
+    private Set currentSet() {
         return this.sets.getLast();
     }
 
@@ -31,14 +31,15 @@ public class Match implements ScoreTracker {
     }
 
     public void addPoint(PlayerRole playerRole){
-        this.lastSet().addPoint(playerRole);
-        if (this.lastSet().isWinner(playerRole){ //this.lastGame().playerWithRole(playerRole)
-            this.sets.add(new Set(this.lastSet()));
+        this.currentSet().addPoint(playerRole);
+        Player player = this.currentSet().lastGame().playerWithRole(playerRole);
+        if (this.currentSet().isWinner(player)){ //this.lastGame().playerWithRole(playerRole)
+            this.sets.add(new Set(this.currentSet()));
         }
     }
 
-    public int pointsLatestGame(Player player) { //revisar las tres llamadas seguidas
-        return this.lastSet().lastGame().getPoints(player);
+    public int pointsLatestGame(Player player) {
+        return this.currentSet().lastGame().getPoints(player);
     }
     public ArrayList<Player> getPlayers(){
         return this.players;

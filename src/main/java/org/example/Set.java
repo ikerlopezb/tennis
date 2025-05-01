@@ -22,17 +22,11 @@ public class Set implements ScoreTracker{
         return this.games.getLast();
     }
     public void addPoint(PlayerRole playerRole) {
-        /*if(lastGame.isTieBreak(this.lastGame().playerWithRole(playerRole))){
-            this.lastGame.addPointTieBreak();
-           {
-           else {
-            this.lastGame().addPoint(playerRole);
-           }
-         */
         this.lastGame().addPoint(playerRole);
-        if (this.lastGame().isWinner(this.lastGame().playerWithRole(playerRole))) { //está bien pasarle a isWinner de esa manera el Player??
+        Player player = this.lastGame().playerWithRole(playerRole);
+        if (this.lastGame().isWinner(player)){
             Game nextGame;
-            if (this.isTieBreak(this.lastGame().playerWithRole(playerRole))) {
+            if (this.isTieBreak(player)) {
                 nextGame = new TieBreak(players);
             } else {
                 nextGame = new Game(this.lastGame());
